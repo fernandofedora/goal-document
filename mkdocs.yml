@@ -56,13 +56,18 @@ extra:
 nav:
   - Home: index.md
   - Repositorios:
-      - goals-client: https://github.com/fernandofedora/goals-client
-      - goals-server: https://github.com/fernandofedora/goals-server
+      - Repositorios: repos.md
+      - API (goals-server): https://github.com/fernandofedora/goals-server
+      - Frontend (goals-client): https://github.com/fernandofedora/goals-client
   - Desarrolladores:
       - Introducción técnica: dev/index.md
+      - Repositorios (goals-client): https://github.com/fernandofedora/goals-client
+      - Repositorios (goals-server): https://github.com/fernandofedora/goals-server
       - Arquitectura: dev/arquitectura.md
       - Frontend (goals-client): dev/frontend.md
       - Backend/API (goals-server): dev/backend.md
+      - Colección Postman: dev/postman.md
+      - Scripts de prueba: dev/scripts.md
       - Base de datos: dev/base-datos.md
       - Instalación: dev/instalacion.md
       - Configuración: dev/configuracion.md
