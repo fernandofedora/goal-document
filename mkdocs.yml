@@ -1,0 +1,79 @@
+site_name: Goals System Docs
+site_description: Documentación técnica y manual de usuario del goals-system
+site_url: https://fernandofedora.github.io/goal-document/
+repo_url: https://github.com/fernandofedora/goal-document
+repo_name: goal-document
+edit_uri: edit/main/goal-document/docs/
+theme:
+  name: material
+  features:
+    - navigation.top
+    - navigation.tabs
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
+  icon:
+    repo: fontawesome/brands/github
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - attr_list
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed
+  - pymdownx.highlight
+  - pymdownx.tasklist
+  - md_in_html
+plugins:
+  - search
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/fernandofedora
+    - icon: fontawesome/brands/github
+      link: https://github.com/fernandofedora/goals-client
+      name: goals-client
+    - icon: fontawesome/brands/github
+      link: https://github.com/fernandofedora/goals-server
+      name: goals-server
+nav:
+  - Home: index.md
+  - Repositorios:
+      - goals-client: https://github.com/fernandofedora/goals-client
+      - goals-server: https://github.com/fernandofedora/goals-server
+  - Desarrolladores:
+      - Introducción técnica: dev/index.md
+      - Arquitectura: dev/arquitectura.md
+      - Frontend (goals-client): dev/frontend.md
+      - Backend/API (goals-server): dev/backend.md
+      - Base de datos: dev/base-datos.md
+      - Instalación: dev/instalacion.md
+      - Configuración: dev/configuracion.md
+      - Flujo de desarrollo: dev/workflow.md
+      - Seguridad: dev/seguridad.md
+      - Pruebas: dev/tests.md
+      - Despliegue: dev/deploy.md
+  - Usuarios:
+      - Guía de inicio: user/guia-inicio.md
+      - Transacciones: user/transacciones.md
+      - Presupuestos: user/presupuestos.md
+      - Tarjetas: user/tarjetas.md
+      - Reportes: user/reportes.md
+      - FAQ: user/faq.md
