@@ -64,6 +64,7 @@ nav:
       - Repositorios (goals-client): https://github.com/fernandofedora/goals-client
       - Repositorios (goals-server): https://github.com/fernandofedora/goals-server
       - Arquitectura: dev/arquitectura.md
+      - Contribución: dev/contribucion.md
       - Frontend (goals-client): dev/frontend.md
       - Backend/API (goals-server): dev/backend.md
       - Colección Postman: dev/postman.md
@@ -82,3 +83,4 @@ nav:
       - Tarjetas: user/tarjetas.md
       - Reportes: user/reportes.md
       - FAQ: user/faq.md
+
