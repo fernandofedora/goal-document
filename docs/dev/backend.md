@@ -443,6 +443,68 @@ http GET :4000/api/stats/summary Authorization:"Bearer <token>" period==2025-11
 
 ---
 
+## Saving Plan (`/api/savings`) [auth]
+- `GET /plans` → Lista planes del usuario, incluye `linkedCategory` si existe.
+- `POST /plans` → Crea plan
+  - Body: `{ name, targetAmount, linkedCategoryId? }` (`targetAmount > 0`)
+  - Valida que `linkedCategoryId` pertenezca al usuario.
+- `PUT /plans/:id` → Actualiza plan del usuario
+  - Body: `{ name?, targetAmount?, linkedCategoryId?, status? }`
+- `GET /plans/:id` → Detalle del plan con `linkedCategory`.
+- `DELETE /plans/:id` → Elimina/archiva plan del usuario.
+- `POST /contributions` → Crea contribución manual
+  - Body: `{ planId, amount, date, note? }` (`amount > 0`)
+  - Valida que el plan pertenezca al usuario.
+- `PUT /contributions/:id` → Actualiza contribución manual del usuario.
+- `DELETE /contributions/:id` → Elimina contribución manual del usuario.
+- `GET /plans/:id/summary?from&to` → Resumen del progreso
+  - Devuelve `{ totalManual, totalAuto, progressPercent, remaining, contributions, autoTransactions }`.
+  - `totalAuto` suma transacciones del usuario en la categoría vinculada con `type='expense'`.
+
+### Ejemplos
+```json
+// POST /api/savings/plans (request)
+{ "name": "Fondo de emergencia", "targetAmount": 1000.00, "linkedCategoryId": 10 }
+
+// 200 (response)
+{ "id": 1, "name": "Fondo de emergencia", "targetAmount": "1000.00", "status": "active", "UserId": 1, "linkedCategoryId": 10, "linkedCategory": { "id": 10, "name": "Ahorro" } }
+```
+
+```json
+// GET /api/savings/plans/1/summary (response)
+{
+  "totalManual": 150.00,
+  "totalAuto": 200.00,
+  "progressPercent": 35.00,
+  "remaining": 650.00,
+  "contributions": [ { "id": 5, "amount": "50.00", "date": "2025-12-01", "note": "Quincena" } ],
+  "autoTransactions": [ { "id": 101, "amount": "200.00", "date": "2025-12-02", "description": "Transferencia a ahorro", "source": "auto" } ]
+}
+```
+
+#### Códigos de estado
+| Operación | 200 | 400 | 403 | 404 | 500 |
+|---|---|---|---|---|---|
+| list plans | array de planes | — | — | — | error servidor |
+| create plan | plan creado | datos inválidos | categoría ajena | — | error servidor |
+| update plan | plan actualizado | datos inválidos | categoría ajena | no encontrado | error servidor |
+| delete plan | { success: true } | — | — | no encontrado | error servidor |
+| create contr | contribución creada | datos inválidos | plan ajeno | — | error servidor |
+| update contr | contribución actualizada | datos inválidos | — | no encontrada | error servidor |
+| delete contr | { success: true } | — | — | no encontrada | error servidor |
+| summary | objeto de resumen | rango inválido | — | plan no encontrado | error servidor |
+| GET | `/api/savings/plans` | Sí | — | array de planes |
+| POST | `/api/savings/plans` | Sí | `name,targetAmount,linkedCategoryId?` | plan con `linkedCategory` |
+| PUT | `/api/savings/plans/:id` | Sí | campos del plan | plan actualizado |
+| GET | `/api/savings/plans/:id` | Sí | — | plan con `linkedCategory` |
+| DELETE | `/api/savings/plans/:id` | Sí | — | `{ success:true }` |
+| POST | `/api/savings/contributions` | Sí | `planId,amount,date,note?` | contribución |
+| PUT | `/api/savings/contributions/:id` | Sí | `amount,date,note?` | contribución |
+| DELETE | `/api/savings/contributions/:id` | Sí | — | `{ success:true }` |
+| GET | `/api/savings/plans/:id/summary` | Sí | `from?,to?` | progreso y totales |
+
+---
+
 ## Errores y seguridad
 - Todos los endpoints atrapados devuelven `500` con `{ message: 'Server error' }` en excepciones.
 - Endpoints protegidos verifican pertenencia de recursos con `UserId`.
